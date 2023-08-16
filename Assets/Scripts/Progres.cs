@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -16,6 +17,7 @@ public class Progres : MonoBehaviour
     public Sprite[] arraySprites;
     public GameObject button;
     public GameObject content;
+    
 
     private List<GameObject> list = new List<GameObject>();
     private VerticalLayoutGroup _group;
@@ -33,11 +35,6 @@ public class Progres : MonoBehaviour
         _group = GetComponent<VerticalLayoutGroup>();
         setAchievs();
 
-
-        if (isProgres)
-        {
-            StartCoroutine(IdleFarm());
-        }
 
         //AchievementCompleted();
 
@@ -65,7 +62,7 @@ public class Progres : MonoBehaviour
             //Создаем экземпляр кнопки достижения
             var buttonAchi = Instantiate(button, transform);
             //Определяем высоту кнопки
-            var buttonAchiHeight = buttonAchi.GetComponent<RectTransform>().rect.height;
+            var buttonAchiHeight = buttonAchi.GetComponent<RectTransform>().rect.height + 150;
             var rectTransfCustom = GetComponent<RectTransform>();
             rectTransfCustom.sizeDelta = new Vector2(rectTransfCustom.rect.width, buttonAchiHeight * arrayTitles.Length);
             Destroy(buttonAchi);
@@ -88,9 +85,10 @@ public class Progres : MonoBehaviour
     {
         switch (id)
         {
-            case 0:
+            case 0:                
                 Debug.Log(id);
-                IdleFarm();
+                PlayerPrefs.SetString("LastSession", DateTime.Now.ToString());
+                PlayerPrefs.SetInt("isProgres", 1);
                 break;
             case 1:
                 Debug.Log(id);
@@ -142,22 +140,22 @@ public class Progres : MonoBehaviour
     //}
     //// TODO Метод полечения достижения - конец
 
-    // TODO Метод автоматического увеличения денег - начало
-    IEnumerator IdleFarm()
-    {
-        yield return new WaitForSeconds(2); //Повторять через указанное число секунд
-        money++;
-        PlayerPrefs.SetInt("money", money);
-        Debug.Log(money);
-        StartCoroutine(IdleFarm());         //Перезапускаем цикл
-    }
-    // TODO Метод автоматического увеличения денег - конец
+    //// TODO Метод автоматического увеличения денег - начало
+    //IEnumerator IdleFarm()
+    //{
+    //    yield return new WaitForSeconds(2); //Повторять через указанное число секунд
+    //    money++;
+    //    PlayerPrefs.SetInt("money", money);
+    //    Debug.Log(money);
+    //    StartCoroutine(IdleFarm());         //Перезапускаем цикл
+    //}
+    //// TODO Метод автоматического увеличения денег - конец
 
 
     // TODO Метод возврата назад - начало
     public void OnBackPresed()
     {
-        SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
+        SceneManager.LoadScene(0);
     }
     // TODO Метод возврата назад - конец
 
