@@ -47,10 +47,10 @@ public class CameraZooming : MonoBehaviour
 
     private void Zooming(float value)
     {
-        float height = this.transform.position.y + (value * _speed * Time.deltaTime);
+        float height = this.transform.position.z + (value * _speed * Time.deltaTime);
         float delta = Mathf.Abs(height - _targetPos.y);
 
         if (delta <= _radius)
-            this.transform.position = new Vector3(this.transform.position.x, height, this.transform.position.z);
+            this.transform.position = new Vector3(this.transform.position.x,this.transform.position.y, height);
     }
 }

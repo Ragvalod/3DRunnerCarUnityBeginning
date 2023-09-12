@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class CameraMovement : MonoBehaviour
 {
@@ -12,10 +13,10 @@ public class CameraMovement : MonoBehaviour
     //public float _radius = 10;
     [Tooltip("Точка от которой считается доступный радиус перемещения камеры (если она не задана в инспекторе, то по умолчанию он определяется как компонент, на котором находится сценарий)")]
     public Transform _target;
-
+    
     private Touch _touch;
     private Vector3 _targetPos;
-    public float speedRotetion = 15;
+    public float speedRotation = 15;
     public GameObject car;
 
     private void Start()
@@ -24,16 +25,13 @@ public class CameraMovement : MonoBehaviour
         {
             _target = this.transform;
         }
-
         _targetPos = _target.localEulerAngles;
     }
 
     private void Update()
     {
-        //Vector3 caarPos = new Vector3(10, 10, 10);
-        //transform.position = car.transform.position;
-        //transform.localScale += caarPos;
-        transform.Rotate(0, speedRotetion * Time.deltaTime, 0);
+       
+        transform.Rotate(0, speedRotation * Time.deltaTime, 0);
 
         if (Input.touchCount == 1)
         {
@@ -43,7 +41,7 @@ public class CameraMovement : MonoBehaviour
             {
                 Vector3 movePos = new Vector3(
                     transform.localEulerAngles.x,
-                    transform.localEulerAngles.y + +_touch.deltaPosition.x * _speed * -1 * Time.deltaTime,
+                    transform.localEulerAngles.y +_touch.deltaPosition.x * _speed * -1 * Time.deltaTime,
                     transform.localEulerAngles.z);
 
                 Vector3 distance = movePos - _targetPos;
